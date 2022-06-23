@@ -1,0 +1,23 @@
+{
+  "name": "riot-games-news-bot",
+  "version": "0.0.9",
+  "type": "commonjs",
+  "description": "A Discord Bot for sending the Latest Riot Games News",
+  "author": {
+    "name": "Justus Walter-Helk"
+  },
+  "scripts": {
+    "start": "ts-node start.ts"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^0.4.1",
+    "discord-api-types": "^0.33.0",
+    "discord.js": "^13.7.0",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.6.4"
+  }
+}
