@@ -19,4 +19,4 @@ Commands.registerCommands(clientId)
 
 setInterval(function(){RiotAPI.CompareLocalToLatest(bot)}, 60000)
 
-console.log(Bot.startBot(bot, botToken));
+Bot.startBot(bot,botToken);

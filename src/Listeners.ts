@@ -15,12 +15,19 @@ class Listeners
 
         //Send latest Article for Testing!
         bot.on("messageCreate", (msg) =>{
+            if(msg.author.username == "Justus" && msg.content == "-r testSendAll 0013")
+            {
+                RiotAPI.SendNewArticleToAllGuilds(bot);
+                msg.reply("Sent a Test Article to all guilds")
+            }
             if(msg.author.username == "Justus" && msg.content == "-r testSend 0012")
             {
                 RiotAPI.SendLatestArticleToGuild(bot)
                 msg.reply("Sent a Test Article to 703280953790955521")
             }
         })
+
+        
 
         //Handle MessageButtons
         bot.on("interactionCreate", async interaction =>{
@@ -49,7 +56,6 @@ class Listeners
                         {
                             try {
                                 {
-                                    console.log("Has permissons to Manage Channels")
                                     interaction.guild.channels.create("riot-games-news", {
                                         type: "GUILD_TEXT",
                                         permissionOverwrites: [

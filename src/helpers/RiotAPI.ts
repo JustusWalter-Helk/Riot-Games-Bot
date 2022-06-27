@@ -7,6 +7,7 @@ var FullArticleData:any;
 
 const delay = (ms:any) => new Promise(resolve => setTimeout(resolve, ms))
 
+import { channel } from "diagnostics_channel";
 import { AnyChannel, Channel, Client, MessageEmbed } from "discord.js";
 import fs from "fs"
 import fetch from "node-fetch"
@@ -49,7 +50,6 @@ class RiotAPI
     public static async getFullArticleData()
     {
         await this.getData(url, (data: any)=> {FullArticleData = data.articles[0]})
-        console.log("Saved latest Article Data!")
     }
 
     public static writeSaveFile(data:string)
@@ -81,7 +81,6 @@ class RiotAPI
 
     public static async SendLatestArticleToGuild(bot:Client)
     {
-        console.log("Sending Test Article to 703280953790955521")
         try{
         await this.getFullArticleData()
         await delay(2000)
@@ -92,11 +91,12 @@ class RiotAPI
         var link = FullArticleData.link
 
         var Rguild = bot.guilds.cache.get("703280953790955521")
-        console.log(Rguild)
-        if(Rguild?.channels.cache.find(channel => channel.name == "riot-games-news"))
+        if(Rguild == null) return;
+        //console.log(Rguild?.channels.cache.find(channel => channel.name == "riot-games-news"))
+        
+        if(Rguild.channels.cache.find(channel => channel.name == "riot-games-news"))
             {   
-                console.log("Channel found!")
-                var channel1 = Rguild.channels.cache.get("982390560063107193")
+                var channel1 = Rguild.channels.cache.find(channel => channel.name == "riot-games-news")
                 console.log(channel1)
                 var embed = new MessageEmbed()
                 .setColor("#eb3434")
@@ -108,10 +108,8 @@ class RiotAPI
                 .setTimestamp()
 
                 if(Rguild.me == null) return
-                console.log("Me is not null")
                 if(channel1?.permissionsFor(Rguild.me)?.has("SEND_MESSAGES") && channel1.permissionsFor(Rguild.me).has("VIEW_CHANNEL"))
                 {
-                    console.log("Permissions granted!")
                     if(channel1.type == "GUILD_TEXT")
                     {
                         try {
@@ -146,13 +144,13 @@ class RiotAPI
             var Rguild = bot.guilds.cache.get(guild)
             if(Rguild?.channels.cache.find(channel => channel.name == "riot-games-news"))
             {
-                var channel1 = Rguild.channels.cache.find((channel) => channel.name == "riot-games-news" && channel.type == "GUILD_TEXT")
+                var channel1 = Rguild?.channels.cache.find(channel => channel.name == "riot-games-news")
                 var embed = new MessageEmbed()
                 .setColor("#eb3434")
                 .setTitle(title)
                 .setAuthor("Riot Games News")
                 .setFooter("Article from " + date)
-                .setDescription(secondTitle + "\u200B" + "[Read the Full Article](" + link + ")")
+                .setDescription(secondTitle + "\u200B" + "[Read the full article] (" + link + ")")
                 .setImage(image)
                 .setTimestamp()
 

@@ -27,7 +27,7 @@ class Commands
 
     private static sendSetupGuideCommand = new SlashCommandBuilder()
         .setName("setup")
-        .setDescription("Allows you to setup the Bot for your Server!")
+        .setDescription("Allows you to setup the bot for your server!")
 }
 
 export {Commands}
